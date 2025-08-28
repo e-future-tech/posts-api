@@ -23,6 +23,7 @@ Fitur tambahan
 
 postman : untuk tes endpoint
 mailtrap.io : untuk test verifikasi email
+disertai juga file mysql
 
 ------------------------------------------
 
