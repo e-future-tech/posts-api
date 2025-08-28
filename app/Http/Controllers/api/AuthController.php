@@ -53,6 +53,9 @@ class AuthController extends Controller
         }
 
         if (! $user->hasVerifiedEmail()) {
+            // Trigger event agar listener default Laravel kirim email verifikasi
+            event(new Registered($user));
+
             return response()->json(['message' => 'Email not verified'], 403);
         }
 

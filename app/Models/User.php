@@ -68,6 +68,17 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function bookmarkedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'bookmarks')
+            ->withTimestamps();
+    }
+
 
     public function sendPasswordResetNotification($token)
     {
