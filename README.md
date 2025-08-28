@@ -1,61 +1,206 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+REST API untuk aplikasi Post
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Fitur yang disediakan
+1. Autentikasi 
+     Login, Register, Logout. 
+2. Manajemen Data 
+     User: Basic data + profile info. 
+      Category: CRUD kategori artikel. 
+     Post: CRUD artikel (title, content, category, cover image). 
+     Bookmark: Mark/unmark post yang disukai. 
+3. Relasi 
+     User hasMany Posts. 
+     Post belongsTo Category. 
+     User many-to-many Bookmarked Posts. 
+4. Catatan 
+     Menerapkan soft delete 
+     Gunakan Spatie Media Library untuk upload gambar artikel. 
+     Pagination pada semua list API.
 
-## About Laravel
+Fitur tambahan
+- email verification
+- forgot password
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+postman : untuk tes endpoint
+mailtrap.io : untuk test verifikasi email
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+------------------------------------------
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Endpoint
 
-## Learning Laravel
+post api/register
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Header
+- Accept: application/json
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Body
+- name
+- email
+- password
+- password_confirmation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+------------------------------------------
 
-## Laravel Sponsors
+post api/login
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Header
+- Accept: application/json
 
-### Premium Partners
+Body
+- email
+- password
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+-------------------------------------------
 
-## Contributing
+post api/forgot-password // akan kirim token ke email
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Header
+- Accept: application/json
 
-## Code of Conduct
+body
+- email
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-------------------------------------------
 
-## Security Vulnerabilities
+post api/reset-password
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Header
+- Accept: application/json
 
-## License
+body
+- email
+- token
+- password
+- password_confirmation
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-------------------------------------------
+
+get api/logout
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+-------------------------------------------
+
+get api/user
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+-------------------------------------------
+
+get api/category // show all category
+
+Header
+- Accept: application/json
+
+-------------------------------------------
+
+post api/category // create new category
+
+Header
+- Accept: application/json
+
+body 
+- name
+
+-------------------------------------------
+
+get /api/category/{category name} // show specific category
+
+Header
+- Accept: application/json
+
+-------------------------------------------
+
+put /api/category/{category name} // update category
+
+Header
+- Accept: application/json
+
+Body // raw
+- name
+
+-------------------------------------------
+
+DELETE /api/category/{category name} // delete category
+
+Header
+- Accept: application/json
+
+-------------------------------------------
+
+get api/post // Show all posts
+get api/post/{group}/{name} // group by category or user, {id category or user}
+
+Header
+- Accept: application/json
+
+-------------------------------------------
+
+post api/post // create post
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+Body 
+- title
+- slug
+- body
+- category_id // options di tentukan agar tidak aneh2
+- cover // file gambar
+
+-------------------------------------------
+
+DELETE api/post/{id post} // Delete post
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+-------------------------------------------
+
+POST api/post/update/{id post} // Update post
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+Body
+- title
+- slug
+- body
+- category_id
+- cover // file
+
+-------------------------------------------
+
+GET api/bookmark // show all post bookmarked by specific user
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+-------------------------------------------
+
+GET api/bookmark/{post} // bookmark post by specific user 
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+-------------------------------------------
+
+Delete api/bookmark/{post} // Delete specific post in bookmark by specific user 
+
+Header
+- Authorization : Bearer <Token>
+- Accept: application/json
+
+
+
+
+
